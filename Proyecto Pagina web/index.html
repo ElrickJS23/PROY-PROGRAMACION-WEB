@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="boton.css">
+    <title>INICIO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!---->
+
+    <script>
+        
+window.onload = function () {
+    // Variables
+    const IMAGENES = [
+        'img/galeria1.jpg',
+        'img/galeria2.jpg',
+        'img/galeria3.jpg',
+        'img/galeria4.jpg',
+        'img/galeria5.jpg',
+        'img/galeria6.jpg',
+        'img/galeria7.jpg',
+        'img/galeria8.jpg',
+        'img/galeria9.jpg',
+        'img/galeria10.jpg'
+    ];
+    const TIEMPO_INTERVALO_MILESIMAS_SEG = 500;
+    let posicionActual = 0;
+    let $botonRetroceder = document.querySelector('#retroceder');
+    let $botonAvanzar = document.querySelector('#avanzar');
+    let $imagen = document.querySelector('#imagen');
+    let $botonPlay = document.querySelector('#play');
+    let $botonStop = document.querySelector('#stop');
+    let intervalo;
+
+    // Funciones
+
+    /**
+     * Funcion que cambia la foto en la siguiente posicion
+     */
+    function pasarFoto() {
+        if(posicionActual >= IMAGENES.length - 1) {
+            posicionActual = 0;
+        } else {
+            posicionActual++;
+        }
+        renderizarImagen();
+    }
+
+    /**
+     * Funcion que cambia la foto en la anterior posicion
+     */
+    function retrocederFoto() {
+        if(posicionActual <= 0) {
+            posicionActual = IMAGENES.length - 1;
+        } else {
+            posicionActual--;
+        }
+        renderizarImagen();
+    }
+
+    /**
+     * Funcion que actualiza la imagen de imagen dependiendo de posicionActual
+     */
+    function renderizarImagen () {
+        $imagen.style.backgroundImage = `url(${IMAGENES[posicionActual]})`;
+    }
+
+    /**
+     * Activa el autoplay de la imagen
+     */
+    function playIntervalo() {
+        intervalo = setInterval(pasarFoto, TIEMPO_INTERVALO_MILESIMAS_SEG);
+        // Desactivamos los botones de control
+        $botonAvanzar.setAttribute('disabled', true);
+        $botonRetroceder.setAttribute('disabled', true);
+        $botonPlay.setAttribute('disabled', true);
+        $botonStop.removeAttribute('disabled');
+
+    }
+
+    /**
+     * Para el autoplay de la imagen
+     */
+    function stopIntervalo() {
+        clearInterval(intervalo);
+        // Activamos los botones de control
+        $botonAvanzar.removeAttribute('disabled');
+        $botonRetroceder.removeAttribute('disabled');
+        $botonPlay.removeAttribute('disabled');
+        $botonStop.setAttribute('disabled', true);
+    }
+
+    // Eventos
+    $botonAvanzar.addEventListener('click', pasarFoto);
+    $botonRetroceder.addEventListener('click', retrocederFoto);
+    $botonPlay.addEventListener('click', playIntervalo);
+    $botonStop.addEventListener('click', stopIntervalo);
+    // Iniciar
+    renderizarImagen();
+}
+
+
+    </script>
+</head>
+<header>
+    <nav>
+        <div class="logo"></div>
+        <a class="btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <div class="menu">
+            <a href="index.html">INICIO</a>
+            <a href="capitulos.html">CAPITULOS</a>
+            <a href="formulario.html">REGISTRESE</a>
+        </div>
+    </nav>
+</header>
+
+</html>
+<body class="p-3 mb-2 bg-black text-white">
+    <div class="peso"></div>
+    <div class="carousel">
+        <button id="retroceder">Retroceder</button>
+        <div id="imagen"></div>
+        <button id="avanzar">Avanzar</button>
+    </div>
+    <div class="controles" >
+        <button id="play">Play</button>
+        <button id="stop" disabled>Stop</button>
+    </div>    
+    <!---->
+    <div class="icon-bar">
+        <a href="https://www.facebook.com/insidejob" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a> 
+        <a href="https://twitter.com/insidejob?lang=es" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a> 
+        <a href="https://www.youtube.com/watch?v=DjiohiiCY4s" target="_blank" class="youtube"><i class="fa fa-youtube"></i></a> 
+        <a href="https://web.whatsapp.com/" target="_blank" class="whatsapp"><i class="fa fa-whatsapp"></i></a> 
+    </div>
+   
+    <script type="text/javascript">
+        $(".btn").on("click", function(){
+            $('.menu').toggleClass("show");
+        });
+    </script>
+    
+</body>
+<footer>
+    <h1>Joel Andres Flores Santalla</h1>
+    <div>
+        <div id="game-container" class="contenedor"></div>
+        <script src="phaser.min.js"></script>
+        <script src="Game.js"></script>
+    </div>
+</footer>
